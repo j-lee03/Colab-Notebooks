@@ -1,0 +1,16 @@
+#1번문제
+word = 제Python"
+print(word[3])
+print(word[5])
+#2번문제
+numbers = [10, 20, 30, 40, 50]
+print(numbers[2])# 예상 결과: 30
+print(numbers[0])# 예상 결과: 10
+#3번문제\
+text = "Python"
+print(text[0:3]) # 예상 결과: Pyt
+print(text[2])# 예상 결과: thon
+#4번문제
+data = [10, 20, 30, 40, 50]
+print(data[1:4])# 예상 결과: [20, 30, 40]
+print(data[::-1])# 예상 결과: [50, 40, 30, 20, 10]
