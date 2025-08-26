@@ -1,0 +1,19 @@
+[
+    {
+        "label": "gretting",
+        "importPath": "module1",
+        "description": "module1",
+        "isExtraImport": true,
+        "detail": "module1",
+        "documentation": {}
+    },
+    {
+        "label": "gretting",
+        "kind": 2,
+        "importPath": "module1",
+        "description": "module1",
+        "peekOfCode": "def gretting():\n    print(\"Hello from module1!\")\n    print(\"테스트중입니다\")\nprint(\"name:\", __name__)\n#if __name__=='__main__':",
+        "detail": "module1",
+        "documentation": {}
+    }
+]
