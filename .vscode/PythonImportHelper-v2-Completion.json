@@ -1,10 +1,54 @@
 [
     {
+        "label": "requests",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "requests",
+        "description": "requests",
+        "detail": "requests",
+        "documentation": {}
+    },
+    {
+        "label": "BeautifulSoup",
+        "importPath": "bs4",
+        "description": "bs4",
+        "isExtraImport": true,
+        "detail": "bs4",
+        "documentation": {}
+    },
+    {
+        "label": "pandas",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "pandas",
+        "description": "pandas",
+        "detail": "pandas",
+        "documentation": {}
+    },
+    {
+        "label": "datetime",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "datetime",
+        "description": "datetime",
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
         "label": "gretting",
         "importPath": "module1",
         "description": "module1",
         "isExtraImport": true,
         "detail": "module1",
+        "documentation": {}
+    },
+    {
+        "label": "crawl_melon_chart",
+        "kind": 2,
+        "importPath": "파이썬프로젝터.__pycache__.clore.crawler.melon_crawler",
+        "description": "파이썬프로젝터.__pycache__.clore.crawler.melon_crawler",
+        "peekOfCode": "def crawl_melon_chart():\n    print(\"멜론 TOP 100 차트 크롤링을 시작합니다...\")\n    url = 'https://www.melon.com/chart/index.htm'\n    headers = {\n        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'\n    }\n    try:\n        response = requests.get(url, headers=headers)\n        response.raise_for_status() \n    except requests.exceptions.RequestException as e:",
+        "detail": "파이썬프로젝터.__pycache__.clore.crawler.melon_crawler",
         "documentation": {}
     },
     {
