@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>한울 조교님 설문조사</title>
+    <style>
+        body {
+            font-family: 'Malgun Gothic', sans-serif;
+            background-color: #f9f9f9;
+            color: #333;
+            padding: 20px;
+        }
+        .container {
+            max-width: 650px;
+            margin: auto;
+            background: #fff;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+        }
+        .question-block {
+            margin-bottom: 25px;
+            border: 1px solid #e0e0e0;
+            padding: 15px;
+            border-radius: 8px;
+        }
+        .question-text {
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        .options-group label {
+            display: block;
+            margin-bottom: 8px;
+            cursor: pointer;
+        }
+        input[type="radio"] {
+            margin-right: 10px;
+        }
+        button {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background-color: #3498db;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>한울 조교님에 대한 설문조사</h1>
+
+        <form action="#" method="POST">
+
+            <div class="question-block">
+                <p class="question-text">1. 한울 조교님은 멋지다.</p>
+                <div class="options-group">
+                    <label><input type="radio" name="q1" value="very_satisfied"> 매우만족</label>
+                    <label><input type="radio" name="q1" value="satisfied"> 만족</label>
+                    <label><input type="radio" name="q1" value="neutral"> 보통</label>
+                    <label><input type="radio" name="q1" value="dissatisfied"> 불만족</label>
+                    <label><input type="radio" name="q1" value="no_comment"> 이걸 굳이 답을...</label>
+                </div>
+            </div>
+
+            <div class="question-block">
+                <p class="question-text">2. 한울 조교님을 때리고 싶다.</p>
+                <div class="options-group">
+                    <label><input type="radio" name="q2" value="very_satisfied"> 매우만족</label>
+                    <label><input type="radio" name="q2" value="satisfied"> 만족</label>
+                    <label><input type="radio" name="q2" value="neutral"> 보통</label>
+                    <label><input type="radio" name="q2" value="dissatisfied"> 불만족</label>
+                    <label><input type="radio" name="q2" value="no_comment"> 이걸 굳이 답을...</label>
+                </div>
+            </div>
+
+            <div class="question-block">
+                <p class="question-text">3. 나는 조교님을 보면 뿅망치로 때릴 것이다.</p>
+                <div class="options-group">
+                    <label><input type="radio" name="q3" value="very_satisfied"> 매우만족</label>
+                    <label><input type="radio" name="q3" value="satisfied"> 만족</label>
+                    <label><input type="radio" name="q3" value="neutral"> 보통</label>
+                    <label><input type="radio" name="q3" value="dissatisfied"> 불만족</label>
+                    <label><input type="radio" name="q3" value="no_comment"> 이걸 굳이 답을...</label>
+                </div>
+            </div>
+
+            <button type="submit">제출</button>
+        </form>
+    </div>
+
+</body>
+</html>
