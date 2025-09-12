@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>한울 조교님 설문조사 (수정본)</title>
     <style>
-        /* 가독성을 위한 기본 스타일링 */
+        
         body {
             font-family: 'Malgun Gothic', sans-serif;
             background-color: #f9f9f9;
@@ -24,7 +24,7 @@
             text-align: center;
             color: #2c3e50;
         }
-        /* 추가된 문구 스타일 */
+        
         .privacy-notice {
             text-align: center;
             font-size: 0.9em;
@@ -139,14 +139,14 @@
 
     <script>
         function validateForm() {
-            // "surveyForm"이라는 이름의 폼에서 "userName"이라는 이름의 입력 필드 값을 가져옵니다.
+           
             let userName = document.forms["surveyForm"]["userName"].value;
             
-            // 만약 userName 변수가 비어 있다면 (""는 빈 문자열을 의미)
+           
             if (userName == "") {
-                // 경고창을 띄웁니다.
+                
                 alert("이름을 입력해야 넘어갈 수 있어요");
-                // 폼 제출을 막기 위해 false를 반환합니다.
+               
                 return false;
             }
         }
