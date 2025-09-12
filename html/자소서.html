@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>이현직의 자기소개</title>
+    <style>
+        body {
+            font-family: 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif;
+            background-color: #f0f2f5; /* 약간 다른 배경색으로 변경 */
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .wrapper {
+            max-width: 800px;
+            width: 100%;
+            margin: 40px auto;
+            padding: 40px; /* 패딩 증가 */
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+            box-sizing: border-box;
+        }
+        .header {
+            text-align: center; /* 텍스트를 중앙 정렬 */
+            border-bottom: 2px solid #ced4da;
+            padding-bottom: 25px;
+            margin-bottom: 30px;
+        }
+        .header h1 {
+            margin: 0;
+            color: #212529;
+            font-size: 2.5em;
+        }
+        .header p {
+            margin: 5px 0 0;
+            color: #6c757d;
+            font-size: 1.3em;
+            font-weight: 300;
+        }
+        .content {
+            display: flex;
+            flex-wrap: wrap; /* 작은 화면에서 줄바꿈 */
+            gap: 30px; /* 섹션 간 간격 */
+        }
+        .sidebar {
+            width: 250px;
+            flex-shrink: 0;
+        }
+        .main {
+            flex-grow: 1;
+            min-width: 300px;
+        }
+        h2 {
+            color: #343a40;
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 8px;
+            margin-top: 0;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+        ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        ul li {
+            margin-bottom: 10px;
+            position: relative;
+            padding-left: 25px;
+        }
+        ul li::before {
+            content: '👉';
+            position: absolute;
+            left: 0;
+            color: #007bff;
+        }
+        p {
+            margin-bottom: 15px;
+            line-height: 1.8;
+            font-size: 1.1em;
+        }
+        .danger-zone {
+            background-color: #ffe0e6;
+            border: 2px dashed #ff4d6d;
+            padding: 20px;
+            margin-top: 30px;
+            border-radius: 8px;
+            font-weight: bold;
+            color: #b30026;
+            text-align: center;
+            font-size: 1.2em;
+            word-break: keep-all;
+        }
+        .highlight {
+            color: #ff0000;
+            font-size: 1.3em;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+
+        /* 반응형 디자인 */
+        @media (max-width: 768px) {
+            .content {
+                flex-direction: column;
+            }
+            .sidebar {
+                width: 100%;
+                padding-right: 0;
+            }
+            .main {
+                min-width: unset;
+            }
+            .wrapper {
+                padding: 30px;
+                margin: 20px auto;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="wrapper">
+        <div class="header">
+            <h1>안녕하세요, 이현직입니다.</h1>
+            <p>23살, <span style="color: #6c757d;">ISTP의 미학</span>을 추구하는 사람</p>
+        </div>
+
+        <div class="content">
+            <div class="sidebar">
+                <h2>✨ 저에 대해</h2>
+                <ul>
+                    <li>이름: 이현직</li>
+                    <li>나이: 23살</li>
+                    <li>MBTI: ISTP (술 마시고 친한 사람과 있으면 E와 I의 중간 지점까지 갑니다.)</li>
+                </ul>
+
+                <h2>💖 좋아하는 것</h2>
+                <ul>
+                    <li>아무도 날 건들지 않고 집 누워서 빔으로 영화 보기</li>
+                </ul>
+
+                <h2>🚫 싫어하는 것</h2>
+                <ul>
+                    <li>뭘 할 때 건드리는 것</li>
+                    <li>본인도 모르는데 훈수두는 것 (본인이 잘하는 걸로 훈수두면 저는 모르기에 가만히 있습니다.)</li>
+                </ul>
+            </div>
+            <div class="main">
+                <h2>📢 현직 사용 설명서</h2>
+                <p>저는 보통 조용하고 저만의 공간을 중요하게 생각합니다. 하지만 편한 사람들과 함께라면 의외의 모습도 보여줄 수 있습니다. 제 삶의 규칙은 단순합니다. 서로의 공간과 영역을 존중하는 것. 이게 잘 지켜진다면 그 어떤 것보다 편안하고 좋은 관계를 유지할 수 있습니다.</p>
+
+                <div class="danger-zone">
+                    날 건드리면 어떻게 될까?<br>
+                    궁금하면 건드려봐. 어떻게 되나... 는 농담이고<br>
+                    <span class="highlight">절대 나 혼자 안 죽어ㅋ</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
