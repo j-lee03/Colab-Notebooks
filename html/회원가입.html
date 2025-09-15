@@ -1,0 +1,138 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>회원가입</title>
+</head>
+<body>
+    <div>
+        <h2>회원가입</h2>
+        <form id="register-form" novalidate>
+            <div>
+                <input type="text" id="username" placeholder="아이디 (4자 이상)" required>
+                <p id="username-msg"></p>
+            </div>
+            <div>
+                <input type="text" id="name" placeholder="이름 (2자 이상)" required>
+                <p id="name-msg"></p>
+            </div>
+            <div>
+                <input type="password" id="password" placeholder="비밀번호 (8자 이상, 영문/숫자/특수문자 포함)" required>
+                <p id="password-msg"></p>
+            </div>
+            <div>
+                <input type="password" id="password-confirm" placeholder="비밀번호 확인" required>
+                <p id="password-confirm-msg"></p>
+            </div>
+            <button type="submit" id="submit-btn" disabled>가입하기</button>
+        </form>
+    </div>
+
+    <script>
+        const $ = (selector) => document.getElementById(selector);
+
+        const registerForm = $('register-form');
+        const submitBtn = $('submit-btn');
+
+        const inputs = {
+            username: $('username'),
+            name: $('name'),
+            password: $('password'),
+            passwordConfirm: $('password-confirm'),
+        };
+
+        const msgEls = {
+            username: $('username-msg'),
+            name: $('name-msg'),
+            password: $('password-msg'),
+            passwordConfirm: $('password-confirm-msg'),
+        };
+
+        const users = JSON.parse(localStorage.getItem('users')) || {};
+
+        const validators = {
+            username: { regex: /^[a-zA-Z0-9]{4,}$/, msg: '4자 이상 영문/숫자로 입력해주세요.' },
+            name: { regex: /^[a-zA-Z가-힣]{2,}$/, msg: '2자 이상 한글/영문으로 입력해주세요.' },
+            password: { regex: /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d!@#$%^&*()_+]{8,}$/, msg: '8자 이상, 영문/숫자/특수문자를 포함해야 합니다.' }
+        };
+
+        let validationState = { username: false, name: false, password: false, passwordConfirm: false };
+
+        const checkAllFieldsValidity = () => {
+            submitBtn.disabled = !Object.values(validationState).every(isValid => isValid);
+        };
+        
+        const updateFieldStatus = (input, msgEl, message, isValid) => {
+            msgEl.textContent = message;
+            msgEl.style.color = isValid ? 'green' : 'red';
+        };
+
+        const validateRegisterField = (key) => {
+            const input = inputs[key];
+            const msgEl = msgEls[key];
+            
+            if (input.value === "") {
+                msgEl.textContent = "";
+                validationState[key] = false;
+            } else {
+                const { regex, msg } = validators[key];
+                let isValid = regex.test(input.value);
+                let message = isValid ? "사용 가능합니다." : msg;
+
+                if (key === 'username' && isValid) {
+                    if (users[input.value] || input.value === 'admin') {
+                        isValid = false;
+                        message = "이미 사용 중이거나 사용할 수 없는 아이디입니다.";
+                    }
+                }
+                
+                validationState[key] = isValid;
+                updateFieldStatus(input, msgEl, message, isValid);
+            }
+
+            if (key === 'password') {
+                validatePasswordConfirm();
+            }
+            checkAllFieldsValidity();
+        };
+        
+        const validatePasswordConfirm = () => {
+            const { password, passwordConfirm } = inputs;
+            const msgEl = msgEls.passwordConfirm;
+
+            if (passwordConfirm.value === "") {
+                msgEl.textContent = "";
+                validationState.passwordConfirm = false;
+            } else {
+                const isValid = password.value === passwordConfirm.value && password.value !== "";
+                validationState.passwordConfirm = isValid;
+                updateFieldStatus(passwordConfirm, msgEl, isValid ? "비밀번호가 일치합니다." : "비밀번호가 일치하지 않습니다.", isValid);
+            }
+            checkAllFieldsValidity();
+        };
+
+        ['username', 'name', 'password'].forEach(key => inputs[key].addEventListener('input', () => validateRegisterField(key)));
+        inputs.passwordConfirm.addEventListener('input', validatePasswordConfirm);
+
+        registerForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            if (submitBtn.disabled) return;
+            
+            users[inputs.username.value] = {
+                password: inputs.password.value,
+                name: inputs.name.value
+            };
+            localStorage.setItem('users', JSON.stringify(users));
+
+            alert(`${inputs.name.value}님, 회원가입을 축하합니다!`);
+            registerForm.reset();
+
+            Object.values(msgEls).forEach(el => el.textContent = "");
+            Object.keys(validationState).forEach(key => validationState[key] = false);
+            checkAllFieldsValidity();
+        });
+    </script>
+</body>
+</html>
