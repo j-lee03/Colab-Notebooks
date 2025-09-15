@@ -1,0 +1,118 @@
+
+export default `<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>몬스터 잡기 게임</title>
+</head>
+<body>
+
+    <h1>[ 몬스터 전투 ]</h1>
+    <div>
+        <span>잡은 몬스터: </span>
+        <span id="score">0</span>
+    </div>
+    <hr>
+    <div id="game-log" style="height: 400px; overflow-y: scroll; border: 1px solid black; padding: 5px; margin: 10px 0;"></div>
+    <hr>
+    <form id="attack-form">
+        <input type="number" id="damage-input" placeholder="데미지 입력..." disabled>
+        <button type="submit" id="attack-button" disabled>공격</button>
+    </form>
+
+    <script>
+        const scoreEl = document.getElementById('score'),
+              gameLogEl = document.getElementById('game-log'),
+              attackButton = document.getElementById('attack-button'),
+              damageInput = document.getElementById('damage-input');
+
+        let score = 0, currentMonster, attackCount, fixedDamage, gameLoop;
+        let isStopped = false, isWaiting = false;
+
+        function log(msg) {
+            gameLogEl.innerHTML += '<p>' + msg + '</p>';
+            gameLogEl.scrollTop = gameLogEl.scrollHeight;
+        }
+
+        function setInputState(enabled) {
+            damageInput.disabled = !enabled;
+            attackButton.disabled = !enabled;
+            if (enabled) {
+                damageInput.value = '';
+                damageInput.focus();
+            }
+        }
+
+        function autoAttack() {
+            if (isStopped || currentMonster.currentHp <= 0) return;
+            
+            attackCount++;
+            currentMonster.currentHp -= fixedDamage;
+            log('> ' + fixedDamage + '의 데미지를 입혔다!');
+
+            gameLoop = setTimeout(() => {
+                if (isStopped) return;
+                if (currentMonster.currentHp <= 0) {
+                    log('*** ' + attackCount + '번의 공격으로 ' + currentMonster.name + '을(를) 쓰러트렸다! ***');
+                    scoreEl.textContent = ++score;
+                    gameLoop = setTimeout(spawnMonster, 2000);
+                } else {
+                    autoAttack();
+                }
+            }, 800);
+        }
+
+        function spawnMonster() {
+            if (isStopped) return;
+            attackCount = 0;
+            setInputState(false);
+
+            const isBoss = Math.random() < 0.35;
+            const hp = isBoss ? 100000 : Math.floor(Math.random() * 101) + 50;
+            const name = isBoss ? "✨조교님(BOSS)✨" : "몬스터";
+            currentMonster = { name, currentHp: hp };
+            
+            log('야생의 ' + name + '이(가) 나타났다!');
+            
+            gameLoop = setTimeout(() => {
+                if (isStopped) return;
+                log("공격할 데미지를 입력하세요! (1~99)");
+                isWaiting = true;
+                setInputState(true);
+            }, 1000);
+        }
+
+        document.getElementById('attack-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            if (!isWaiting || isStopped) return;
+
+            const damage = parseInt(damageInput.value);
+            if (!damage || damage < 1 || damage > 99) {
+                log(damage > 99 ? "*** 100 이상의 데미지는 입력할 수 없습니다. ***" : "*** 유효한 숫자를 입력해주세요. (1~99) ***");
+                return;
+            }
+            
+            fixedDamage = damage;
+            isWaiting = false;
+            setInputState(false);
+            log('[데미지 ' + fixedDamage + '(으)로 자동 공격을 시작합니다.]');
+            gameLoop = setTimeout(autoAttack, 500);
+        });
+
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && !isStopped) {
+                isStopped = true;
+                clearTimeout(gameLoop);
+                setInputState(false);
+                log("*** ESC가 입력되어 게임을 즉시 중지합니다. ***");
+            }
+        });
+
+        log("게임이 시작되었습니다!");
+        spawnMonster();
+    </script>
+
+</body>
+</html>`;
+
