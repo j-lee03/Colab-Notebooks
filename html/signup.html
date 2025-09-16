@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <title>회원가입</title>
+    <style>
+        .invalid-feedback, .valid-feedback {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container d-flex justify-content-center align-items-center min-vh-100">
+        <div class="card p-4 shadow" style="width: 500px;">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h3 class="m-0">회원가입</h3>
+                <button id="darkModeToggle" class="btn btn-secondary btn-sm"><i class="bi bi-moon-stars-fill"></i></button>
+            </div>
+            
+            <form id="signup-form" novalidate>
+                <div class="mb-3">
+                    <label for="signup-id" class="form-label">아이디</label>
+                    <input type="text" class="form-control" id="signup-id" required minlength="5" maxlength="20">
+                    <div class="invalid-feedback">아이디는 5~20자의 영문 소문자, 숫자만 사용 가능합니다.</div>
+                    <div class="valid-feedback">사용 가능한 아이디입니다.</div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="signup-name" class="form-label">이름</label>
+                    <input type="text" class="form-control" id="signup-name" required>
+                    <div class="invalid-feedback">이름은 한글 또는 영문 대/소문자만 사용 가능합니다.</div>
+                    <div class="valid-feedback">확인되었습니다.</div>
+                </div>
+                
+                <div class="mb-3">
+                    <label class="form-label">성별</label>
+                    <div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="gender" id="gender-male" value="male" required>
+                            <label class="form-check-label" for="gender-male">남성</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="gender" id="gender-female" value="female">
+                            <label class="form-check-label" for="gender-female">여성</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="gender" id="gender-none" value="none">
+                            <label class="form-check-label" for="gender-none">선택 안 함</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="signup-email" class="form-label">이메일</label>
+                    <input type="email" class="form-control" id="signup-email" required>
+                    <div class="invalid-feedback">올바른 이메일 주소를 입력해주세요.</div>
+                    <div class="valid-feedback">사용 가능한 이메일입니다.</div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="signup-pw" class="form-label">비밀번호</label>
+                    <input type="password" class="form-control" id="signup-pw" required>
+                    <div class="invalid-feedback">비밀번호는 8자 이상이며, 영문 대/소문자, 숫자, 특수문자를 모두 포함해야 합니다.</div>
+                    <div class="valid-feedback">안전한 비밀번호입니다.</div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="signup-pw-confirm" class="form-label">비밀번호 확인</label>
+                    <input type="password" class="form-control" id="signup-pw-confirm" required>
+                    <div class="invalid-feedback">비밀번호가 일치하지 않습니다.</div>
+                    <div class="valid-feedback">비밀번호가 일치합니다.</div>
+                </div>
+                
+                <button type="submit" class="btn btn-primary w-100 mt-3">가입하기</button>
+                
+                <a href="index.html" class="btn btn-secondary w-100 mt-2">나가기</a>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal fade" id="confirmModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">가입 정보 확인</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body" id="modal-body-content">
+                    </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">수정</button>
+                    <button type="button" class="btn btn-primary" id="final-submit-btn">확인</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.getElementById('signup-form');
+            const inputs = {
+                id: document.getElementById('signup-id'),
+                name: document.getElementById('signup-name'),
+                email: document.getElementById('signup-email'),
+                pw: document.getElementById('signup-pw'),
+                pwConfirm: document.getElementById('signup-pw-confirm')
+            };
+            const confirmModal = new bootstrap.Modal(document.getElementById('confirmModal'));
+
+            const validators = {
+                id: (val) => /^[a-z0-9]{5,20}$/.test(val),
+                name: (val) => /^[가-힣a-zA-Z]+$/.test(val),
+                email: (val) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val),
+                pw: (val) => /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(val),
+                pwConfirm: (val) => val === inputs.pw.value && val.length > 0
+            };
+
+            const validateField = (field, validator) => {
+                const isValid = validator(field.value);
+                field.classList.toggle('is-valid', isValid);
+                field.classList.toggle('is-invalid', !isValid);
+                return isValid;
+            };
+
+            Object.keys(inputs).forEach(key => {
+                inputs[key].addEventListener('input', () => validateField(inputs[key], validators[key]));
+            });
+            inputs.pw.addEventListener('input', () => validateField(inputs.pwConfirm, validators.pwConfirm));
+
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                let isFormValid = true;
+                Object.keys(inputs).forEach(key => {
+                    if (!validateField(inputs[key], validators[key])) {
+                        isFormValid = false;
+                    }
+                });
+
+                const selectedGender = form.querySelector('input[name="gender"]:checked');
+                if (!selectedGender) {
+                    isFormValid = false;
+                    alert('성별을 선택해주세요.');
+                }
+
+                if (isFormValid) {
+                    const modalBody = document.getElementById('modal-body-content');
+                    modalBody.innerHTML = `
+                        <p><strong>아이디:</strong> ${inputs.id.value}</p>
+                        <p><strong>이름:</strong> ${inputs.name.value}</p>
+                        <p><strong>성별:</strong> ${selectedGender.labels[0].textContent}</p>
+                        <p><strong>이메일:</strong> ${inputs.email.value}</p>
+                    `;
+                    confirmModal.show();
+                }
+            });
+            
+            document.getElementById('final-submit-btn').addEventListener('click', () => {
+                window.location.href = 'welcome.html';
+            });
+
+            const htmlEl = document.documentElement;
+            const darkModeToggle = document.getElementById('darkModeToggle');
+            const savedTheme = localStorage.getItem('theme');
+            const applyTheme = (theme) => {
+                htmlEl.setAttribute('data-bs-theme', theme);
+                localStorage.setItem('theme', theme);
+            };
+            if (savedTheme) {
+                applyTheme(savedTheme);
+            }
+            darkModeToggle.addEventListener('click', () => {
+                const currentTheme = htmlEl.getAttribute('data-bs-theme');
+                applyTheme(currentTheme === 'dark' ? 'light' : 'dark');
+            });
+        });
+    </script>
+</body>
+</html>
